@@ -20,7 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'spot_teleop_keyboard = spot_teleop.spot_teleop_keyboard:main'
+            'spot_teleop_keyboard = spot_teleop.spot_teleop_keyboard:main',
+            'spot_teleop_sliders = spot_teleop.spot_teleop_sliders:main'
         ],
     },
 )
