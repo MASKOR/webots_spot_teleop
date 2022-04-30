@@ -28,8 +28,8 @@ CTRL-C to quit
 
 moveBindings = {
     'i': (1, 0, 0, 0),
-    'j': (0.5, 0, 0, 1),
-    'l': (0.5, 0, 0, -1),
+    'j': (0.1, 0, 0, 1),
+    'l': (0.1, 0, 0, -1),
     ',': (-1, 0, 0, 0),
 }
 
@@ -103,13 +103,13 @@ class TeleopClass(Node):
             roll = 0.0,
             pitch = 0.0,
             yaw = 0.0,
-            StepLength = 0.01,
+            StepLength = 0.024,
             LateralFraction = 0.0,
             YawRate = 0.0,
             StepVelocity = 0.01,
-            ClearanceHeight = 0.02,
+            ClearanceHeight = 0.024,
             PenetrationDepth = 0.003,
-            SwingPeriod = 0.3,
+            SwingPeriod = 0.2,
             YawControl = 0.0,
             YawControlOn = 0.0,
             status = 0,
@@ -130,6 +130,7 @@ class TeleopClass(Node):
         self.pitch = pitch
         self.yaw = yaw
         self.StepLength = StepLength
+        self.StepDirection = 0
         self.LateralFraction = LateralFraction
         self.YawRate = YawRate
         self.StepVelocity = StepVelocity
@@ -146,17 +147,15 @@ class TeleopClass(Node):
 
     def mytimercallback(self):
 
-        speed = 0.05
-        turn = 1.5
-        repeat = 0.0
-        key_timeout = 0.0
+        speed = 1.0
+        turn = 0.5
 
         print(msg)
         print(vels(speed, turn))
 
         key = getKey(self.settings)
         if key in moveBindings.keys():
-            self.StepLength = moveBindings[key][0]
+            self.StepDirection = moveBindings[key][0]
             self.YawRate = moveBindings[key][3]
         elif key in speedBindings.keys():
             speed += speed * speedBindings[key][0]
@@ -192,7 +191,7 @@ class TeleopClass(Node):
             self.roll = 0.0
             self.pitch = 0.0
             self.yaw = 0.0
-            self.StepLength = 0.0
+            self.StepDirection = 0
             # self.LateralFraction = 0.0
             # self.YawRate = 0.0
             # self.StepVelocity = 0.0
@@ -211,7 +210,7 @@ class TeleopClass(Node):
         self.gait_msg.roll = float(self.roll)
         self.gait_msg.pitch = float(self.pitch)
         self.gait_msg.yaw = float(self.yaw)
-        self.gait_msg.step_length = float(self.StepLength * speed)
+        self.gait_msg.step_length = float(self.StepLength * self.StepDirection * speed)
         self.gait_msg.lateral_fraction = float(self.LateralFraction)
         self.gait_msg.yaw_rate = float(self.YawRate * turn)
         self.gait_msg.step_velocity = float(self.StepVelocity)
