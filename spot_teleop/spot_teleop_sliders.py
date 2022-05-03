@@ -8,21 +8,20 @@ from spot_msgs.msg import GaitInput
 import tkinter as tk
 
 params = {
-    'x': float(0),
-    'y': float(0),
-    'z': float(0),
-    'roll': float(0),
-    'pitch': float(0),
-    'yaw': float(0),
-    'step_length': float(0),
-    'lateral_fraction': float(0),
-    'yaw_rate': float(0),
-    'step_velocity': float(0),
-    'clearance_height': float(0),
-    'penetration_depth': float(0),
-    'swing_period': float(0),
-    'yaw_control': float(0),
-    'yaw_control_on': float(0)
+    'x': 0.,
+    'y': 0.,
+    'z': 0.1,
+    'roll': 0.,
+    'pitch': 0.,
+    'yaw': 0.,
+    'step_length': 0.,
+    'lateral_fraction': 0.,
+    'yaw_rate': 0.,
+    'clearance_height': 0.024,
+    'penetration_depth': 0.003,
+    'swing_period': 0.2,
+    'yaw_control': 0.,
+    'yaw_control_on': 0.
 }
 
 
@@ -30,6 +29,7 @@ def create_sliders(tk_module):
     my_scale = []
     for i, text in enumerate(params):
         my_scale.append(tk.Scale(tk_module, label=text, from_=-1, to=1, resolution=0.001, length=200, orient='horizontal'))
+        my_scale[i].set(params[text])
         my_scale[i].grid(row=i,column=1)
     return my_scale
 
@@ -62,7 +62,7 @@ class TeleopClass(Node):
         gait_msg.step_length = self.params['step_length']
         gait_msg.lateral_fraction = self.params['lateral_fraction']
         gait_msg.yaw_rate = self.params['yaw_rate']
-        gait_msg.step_velocity = self.params['step_velocity']
+        gait_msg.step_velocity = 0.001
         gait_msg.clearance_height = self.params['clearance_height']
         gait_msg.penetration_depth = self.params['penetration_depth']
         gait_msg.swing_period = self.params['swing_period']
