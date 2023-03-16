@@ -1,6 +1,6 @@
 from setuptools import setup
 
-package_name = 'spot_teleop'
+package_name = 'webots_spot_teleop'
 
 setup(
     name=package_name,
@@ -20,8 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'spot_teleop_keyboard = spot_teleop.spot_teleop_keyboard:main',
-            'spot_teleop_sliders = spot_teleop.spot_teleop_sliders:main'
+            'keyboard = webots_spot_teleop.keyboard:main',
+            'sliders = webots_spot_teleop.sliders:main'
         ],
     },
 )

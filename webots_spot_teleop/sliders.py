@@ -3,7 +3,7 @@
 import rclpy
 from rclpy.node import Node
 
-from spot_msgs.msg import GaitInput
+from webots_spot_msgs.msg import GaitInput
 
 import tkinter as tk
 
